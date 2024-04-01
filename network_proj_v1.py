@@ -1,26 +1,51 @@
+#Projeto de Grafos - Pontes Sociais
+#Grupo: Camila Faleiros (10395818) & Fernanda Aiko (10395952)
+#Aplicações com grafos - Projeto Entrega 1 
+
+
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 
 def split_vector(vector):
+    '''
+    Função para dividir um vetor em subvetores de tamanho 3, visto que a leitura do arquivo txt possui esse formato.
+    args: vector (list)
+    return: subvectors (list)
+    '''
     subvectors = []
     for i in range(0, len(vector), 3):
         subvectors.append(vector[i:i+3])
     return subvectors
 
 def insert_node(G):
+    '''
+    Função para inserir um vértice no grafo.
+    args: G
+    return: G
+    '''
     node = int(input("Inserir vértice: "))
     if node not in G.nodes:
         G.add_node(node)
     return G
 
 def remove_node(G):
+    '''
+    Função para remover um vértice do grafo.	
+    args: G
+    return: G
+    '''
     node = int(input("Vértice a ser removido: "))
     if node in G.nodes:
         G.remove_node(node)
     return G
 
 def insert_weighted_edge(G):
+    '''
+    Função para inserir aresta com peso no grafo.	
+    args: G
+    return: G
+    '''
     print("Inserir aresta com peso: ")
     edge_start = int(input("Vértice 1: "))
     edge_end = int(input("Vértice 2: "))
@@ -30,6 +55,11 @@ def insert_weighted_edge(G):
     return G
 
 def remove_weighted_edge(G):
+    '''
+    Função para remover aresta do grafo.	
+    args: G
+    return: G
+    '''
     print("Remover aresta com peso: ")
     while True:
         edge_start = int(input("Vértice 1: "))
@@ -42,6 +72,10 @@ def remove_weighted_edge(G):
     return G
 
 def print_graph(G, edges):
+    '''
+    Função para apresentar visualmente o grafo.	
+    args: G, edges (arestas)
+    '''
     print("Vértices: ", G.nodes)
     print("Arestas: ", G.edges)
     print("Pesos das Arestas: ", nx.get_edge_attributes(G, 'weight'))
@@ -71,7 +105,12 @@ def print_graph(G, edges):
 
 
 def read_file():
-    with open('teste.txt', 'r') as file:
+    '''
+    Função para leitura do arquivo txt e formatar os dados para serem utilizados no grafo.	
+    args: None
+    return: tipo do grafo, vertices, arestas
+    '''
+    with open('grafo.txt', 'r') as file:
         data = file.read()
 
     numbers = [int(num) for num in data.split()]
@@ -85,11 +124,16 @@ def read_file():
     return tipo, nodes, edges
 
 def write_file(G):
+    '''
+    Função para escrever no arquivo .txt a partir do grafo.	
+    args: G
+    return: None
+    '''
     aux = nx.get_edge_attributes(G, 'weight').values()
     weights = list(aux)
     x = 0
 
-    with open('teste2.txt', 'w') as file:
+    with open('grafo.txt', 'w') as file:
         file.write("2\n")
         file.write(f"{len(G.nodes)-1}"+"\n")
         for i in G.nodes:
@@ -101,6 +145,11 @@ def write_file(G):
     print("Arquivo salvo com sucesso!\n")
 
 def show_file():
+    '''
+    Função para mostrar o conteúdo do arquivo txt.
+    args: None
+    return: arestas formatadas
+    '''
     tipo, nodes, edges = read_file()
 
     print(f"Tipo do grafo: {tipo}")
@@ -113,6 +162,11 @@ def show_file():
     return edges
 
 def find_connectiviy(G):
+    '''
+    Função para informar se o grafo é conexo e encontrar a conectividade entre 2 pontos no grafo. (Confundi conexidade com conectividade, sorry!)
+    args: G
+    return: None
+    '''
     print("O grafo é CONEXO (não direcionado)")
     while True:
         print("\nMenu de opções: ")
