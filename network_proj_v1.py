@@ -2,8 +2,10 @@
 #Grupo: Camila Faleiros (10395818) & Fernanda Aiko (10395952)
 #Aplicações com grafos - Projeto Entrega 1 
 
+file_path = 'grafo_v3.txt'
 
 import networkx as nx
+from networkx.algorithms import tree
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -110,13 +112,14 @@ def read_file():
     args: None
     return: tipo do grafo, vertices, arestas
     '''
-    with open('grafo.txt', 'r') as file:
+    with open(file_path, 'r') as file:
         data = file.read()
 
     numbers = [int(num) for num in data.split()]
     tipo = numbers[0]
     len_nodes = numbers[1]
     nodes = numbers[2:len_nodes+2]
+    _ = numbers[len_nodes+2]
     edges = numbers[len_nodes+3:]
     edges = split_vector(edges)
     print("Arquivo lido com sucesso!\n")
@@ -133,7 +136,7 @@ def write_file(G):
     weights = list(aux)
     x = 0
 
-    with open('grafo.txt', 'w') as file:
+    with open(file_path, 'w') as file:
         file.write("2\n")
         file.write(f"{len(G.nodes)-1}"+"\n")
         for i in G.nodes:
@@ -168,20 +171,89 @@ def find_connectiviy(G):
     return: None
     '''
     print("O grafo é CONEXO (não direcionado)")
+
+def dijkstra(G):
+    '''
+    Função para encontrar o menor caminho entre dois vértices no grafo.
+    args: G
+    return: None
+    '''
     while True:
         print("\nMenu de opções: ")
-        print("0. Encontrar a conectividade entre 2 pontos")
+        print("0. Encontrar menor caminho entre 2 vértices")
         print("1. Voltar ao menu principal")
         option = int(input("Selecione a opção desejada: "))
         if option == 0:
             a = int(input("Inserir vértice 1: "))
             b = int(input("Inserir vértice 2: "))
-            con = nx.node_connectivity(G, a, b)
-            print(f"Conectividade entre {a} e {b}: ", con)
+            print(nx.dijkstra_path(G, a, b))
         elif option == 1:
             break
         else:
             print("Opção inválida")
+
+def floyd(G):
+    '''
+    Função para encontrar o menor caminho entre dois vértices no grafo.
+    args: G
+    return: None
+    '''
+    while True:
+        print("\nMenu de opções: ")
+        print("0. Encontrar menor caminho entre 2 vértices")
+        print("1. Voltar ao menu principal")
+        option = int(input("Selecione a opção desejada: "))
+        if option == 0:
+            a = int(input("Inserir vértice 1: "))
+            b = int(input("Inserir vértice 2: "))
+            print(nx.floyd_warshall(G, a, b))
+        elif option == 1:
+            break
+        else:
+            print("Opção inválida")
+
+def bellman_ford(G):
+    '''
+    Função para encontrar o menor caminho entre dois vértices no grafo.
+    args: G
+    return: None
+    '''
+    while True:
+        print("\nMenu de opções: ")
+        print("0. Encontrar menor caminho entre 2 vértices")
+        print("1. Voltar ao menu principal")
+        option = int(input("Selecione a opção desejada: "))
+        if option == 0:
+            a = int(input("Inserir vértice 1: "))
+            b = int(input("Inserir vértice 2: "))
+            print(nx.bellman_ford_path(G, a, b))
+        elif option == 1:
+            break
+        else:
+            print("Opção inválida")
+
+def kruskal(G):
+    '''
+    Função para encontrar a árvore geradora mínima de um grafo.
+    args: G
+    return: None
+    '''
+    T = nx.minimum_spanning_tree(G, algorithm= 'kruskal')
+    print(T)
+    nx.draw(T, with_labels=True, node_size=500, font_size=8, node_color='skyblue', edge_color='gray', width=1, alpha=0.7)
+    plt.show()
+
+def prim(G):
+    '''
+    Função para encontrar a árvore geradora mínima de um grafo.
+    args: G
+    return: None
+    '''
+    T = nx.minimum_spanning_tree(G, algorithm= 'prim')
+    print(T)
+    nx.draw(T, with_labels=True, node_size=500, font_size=8, node_color='skyblue', edge_color='gray', width=1, alpha=0.7)
+    plt.show()
+
 
 def main():
     print("\n-----------Pontes Sociais - Projeto de Grafos-----------\nGrupo: Camlia Faleiros & Fernanda Aiko \nObjetivo: Criar relacionamentos a partir de objetivos similares entre os usuários.\n")
@@ -197,8 +269,13 @@ def main():
         print("5. Remover aresta (com peso)")
         print("6. Mostrar arquivo")
         print("7. Mostrar grafo")
-        print("8. Conexidade (& Conectividade)")
-        print("9. Exit")
+        print("8. Conexidade")
+        print("9. Menor caminho entre 2 vértices (Dijkstra)")
+        print("10. Menor caminho entre 2 vértices (Floyd)")
+        print("11. Menor caminho entre 2 vértices (Bellman-Ford)")
+        print("12. Árvore geradora mínima (Kruskal)")
+        print("13. Árvore geradora mínima (Prim)")
+        print("14. Exit")
         option = int(input("\nSelecionar operação: "))
         if option == 0:
             _, nodes, numbers = read_file()
@@ -220,7 +297,17 @@ def main():
             print_graph(G, numbers)
         elif option == 8:
             find_connectiviy(G)
-        elif option == 9:
+        elif option == 9:  
+            dijkstra(G)
+        elif option == 10:
+            floyd(G)
+        elif option == 11:
+            bellman_ford(G)
+        elif option == 12:
+            kruskal(G)
+        elif option == 13:
+            prim(G)
+        elif option == 14:
             break
         else:
             print("Opção Inválida!")
