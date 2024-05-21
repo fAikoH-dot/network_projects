@@ -44,11 +44,15 @@ def read_forms_and_format():
     num_comparacoes = 0
     for i in range (80):
         comparacoes = []
-        for j in range(i+1, 80):
-            vetor1 = binary_vectors[i]
-            vetor2 = binary_vectors[j]
-            qtd_iguais = AND_operation_binary(vetor1, vetor2)
-            comparacoes.append([i+1, j+1, qtd_iguais])
+        # for j in range(i+1, 80):
+        for j in range(80):
+            if i == j:
+                continue
+            else:
+                vetor1 = binary_vectors[i]
+                vetor2 = binary_vectors[j]
+                qtd_iguais = AND_operation_binary(vetor1, vetor2)
+                comparacoes.append([i+1, j+1, qtd_iguais])
         comparacoes = sorted(comparacoes, key=lambda x: x[2], reverse=True)
         comparacoes = comparacoes[:6]
         num_comparacoes += len(comparacoes)
@@ -342,7 +346,7 @@ def main():
         print("12. Árvore geradora mínima (Kruskal)")
         print("13. Árvore geradora mínima (Prim)")
         print("14. Inserir novos resultados da pesquisa")
-        print("14. Exit")
+        print("15. Exit")
         option = int(input("\nSelecionar operação: "))
         if option == 0:
             _, nodes, numbers = read_file()
