@@ -256,31 +256,12 @@ def dijkstra(G):
         if option == 0:
             a = int(input("Inserir vértice 1: "))
             b = int(input("Inserir vértice 2: "))
-            print(nx.dijkstra_path(G, a, b))
+            print(f"Dijkstra: {nx.dijkstra_path(G, a, b)}")
         elif option == 1:
             break
         else:
             print("Opção inválida")
 
-def floyd(G):
-    '''
-    Função para encontrar o menor caminho entre dois vértices no grafo utilizando o algoritmo de Floyd.
-    args: G
-    return: None
-    '''
-    while True:
-        print("\nMenu de opções: ")
-        print("0. Encontrar menor caminho entre 2 vértices")
-        print("1. Voltar ao menu principal")
-        option = int(input("Selecione a opção desejada: "))
-        if option == 0:
-            a = int(input("Inserir vértice 1: "))
-            b = int(input("Inserir vértice 2: "))
-            print(nx.floyd_warshall(G, a, b))
-        elif option == 1:
-            break
-        else:
-            print("Opção inválida")
 
 def bellman_ford(G):
     '''
@@ -296,7 +277,7 @@ def bellman_ford(G):
         if option == 0:
             a = int(input("Inserir vértice 1: "))
             b = int(input("Inserir vértice 2: "))
-            print(nx.bellman_ford_path(G, a, b))
+            print(f"Bellman-Ford: {nx.bellman_ford_path(G, a, b)}")
         elif option == 1:
             break
         else:
@@ -341,12 +322,11 @@ def main():
         print("7. Mostrar grafo")
         print("8. Conexidade")
         print("9. Menor caminho entre 2 vértices (Dijkstra)")
-        print("10. Menor caminho entre 2 vértices (Floyd)")
-        print("11. Menor caminho entre 2 vértices (Bellman-Ford)")
-        print("12. Árvore geradora mínima (Kruskal)")
-        print("13. Árvore geradora mínima (Prim)")
-        print("14. Inserir novos resultados da pesquisa")
-        print("15. Exit")
+        print("10. Menor caminho entre 2 vértices (Bellman-Ford)")
+        print("11. Árvore geradora mínima (Kruskal)")
+        print("12. Árvore geradora mínima (Prim)")
+        print("13. Inserir novos resultados da pesquisa")
+        print("14. Exit")
         option = int(input("\nSelecionar operação: "))
         if option == 0:
             _, nodes, numbers = read_file()
@@ -371,16 +351,14 @@ def main():
         elif option == 9:  
             dijkstra(G)
         elif option == 10:
-            floyd(G)
-        elif option == 11:
             bellman_ford(G)
-        elif option == 12:
+        elif option == 11:
             kruskal(G)
-        elif option == 13:
+        elif option == 12:
             prim(G)
-        elif option == 14:
+        elif option == 13:
             read_forms_and_format()
-        elif option == 15:
+        elif option == 14:
             break
         else:
             print("Opção Inválida!")
